@@ -1,0 +1,351 @@
+
+<style>
+@font-face {
+  font-family: 'CoFo Sans';
+  src: local('CoFo Sans'), local('CoFoSans');
+  font-weight: 400 900;
+}
+:root {
+  --bg: #f4f4f5;
+  --text: #18181b;
+  --accent: #bef264;
+  --card: #ffffff;
+  --muted: #52525b;
+  --font-primary: 'CoFo Sans', system-ui, sans-serif;
+  --font-secondary: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+#portfolio-app { font-family: var(--font-secondary); color: var(--text); background: var(--bg); }
+#admin-bar { background: var(--text); color: var(--accent); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+#admin-bar-title { font-family: var(--font-primary); font-weight: 900; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; }
+.admin-btn { background: var(--accent); color: var(--text); border: none; padding: 7px 14px; font-family: var(--font-primary); font-weight: 900; font-size: 11px; cursor: pointer; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; transition: opacity 0.2s; }
+.admin-btn:hover { opacity: 0.8; }
+.admin-btn.outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); margin-right: 6px; }
+.admin-btns { display: flex; align-items: center; }
+
+/* PORTFOLIO */
+#portfolio-view { background: var(--bg); }
+.p-header { min-height: 88vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 2rem; }
+.sketch-title { font-family: var(--font-primary); font-size: clamp(3rem, 8vw, 5.5rem); margin: 0; color: var(--text); font-weight: 900; letter-spacing: -2px; line-height: 1.05; }
+.highlight { display: inline-block; position: relative; }
+.highlight::after { content: ""; position: absolute; bottom: 6px; left: 0; width: 100%; height: 10px; background: var(--accent); z-index: -1; transform: rotate(-1.5deg); }
+.motto { font-family: var(--font-secondary); font-size: 1.15rem; max-width: 600px; margin-top: 1.5rem; font-weight: 400; line-height: 1.75; color: var(--muted); }
+.p-grid-wrap { padding: 5vw; }
+.p-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; }
+.p-card { background: var(--card); border-radius: 16px; padding: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); border: 2px solid transparent; transition: all 0.3s ease; }
+.p-card:hover { border-color: var(--text); transform: translateY(-6px); }
+.card-img { width: 100%; height: 220px; border-radius: 12px; margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: center; }
+.brand-logo { font-family: var(--font-primary); font-weight: 900; font-size: 1.9rem; text-transform: uppercase; letter-spacing: -1px; text-align: center; line-height: 1.1; }
+.card-name { font-family: var(--font-primary); font-weight: 900; font-size: 1.3rem; margin: 0 0 0.4rem; letter-spacing: -0.5px; }
+.card-desc { font-family: var(--font-secondary); font-size: 0.88rem; color: var(--muted); margin-bottom: 1.2rem; min-height: 40px; line-height: 1.6; }
+.pf-btn { display: inline-block; padding: 9px 18px; background: var(--text); color: var(--accent); border-radius: 8px; font-family: var(--font-primary); font-weight: 900; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.5px; text-decoration: none; transition: 0.3s; }
+.pf-btn:hover { background: var(--accent); color: var(--text); }
+.pf-btn.disabled { opacity: 0.4; pointer-events: none; cursor: default; }
+.cta-section { padding: 6rem 2rem; text-align: center; background: var(--bg); }
+.cta-section h2 { font-family: var(--font-primary); font-size: 2.1rem; font-weight: 900; margin-bottom: 1.8rem; letter-spacing: -1px; line-height: 1.15; }
+.contact-links { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.contact-item { font-family: var(--font-primary); font-size: 1.1rem; font-weight: 900; color: var(--text); text-decoration: none; border-bottom: 4px solid var(--accent); padding: 2px 8px; transition: 0.2s; }
+.contact-item:hover { background: var(--accent); }
+.p-footer { font-family: var(--font-secondary); padding: 2.5rem; text-align: center; font-size: 0.75rem; font-weight: 400; color: var(--muted); }
+
+/* EDIT PANEL */
+#edit-panel { background: #fafaf9; min-height: 100vh; padding: 1.5rem 1.5rem 120px; }
+.edit-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 3px solid var(--text); }
+.edit-top h2 { font-family: var(--font-primary); font-size: 1.7rem; font-weight: 900; letter-spacing: -0.5px; }
+.edit-section { background: white; border-radius: 12px; padding: 1.2rem; margin-bottom: 1.2rem; border: 1px solid #e4e4e7; }
+.edit-sec-title { font-family: var(--font-primary); font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1rem; color: var(--muted); }
+.edit-field { margin-bottom: 0.8rem; }
+.edit-field label { display: block; font-family: var(--font-secondary); font-size: 0.75rem; font-weight: 600; margin-bottom: 3px; color: var(--text); }
+.edit-field input, .edit-field textarea { width: 100%; padding: 7px 10px; border: 1.5px solid #d4d4d8; border-radius: 8px; font-size: 0.85rem; font-family: var(--font-secondary); color: var(--text); background: white; transition: border-color 0.2s; }
+.edit-field input:focus, .edit-field textarea:focus { outline: none; border-color: var(--text); }
+.edit-field textarea { resize: vertical; min-height: 56px; }
+.fields-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.proj-card { border: 1.5px solid #e4e4e7; border-radius: 10px; padding: 0.9rem; margin-bottom: 0.8rem; }
+.proj-head { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+.proj-dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid #e4e4e7; flex-shrink: 0; }
+.proj-name-label { font-family: var(--font-primary); font-weight: 900; font-size: 0.9rem; margin-left: 8px; }
+.proj-toggle { background: none; border: none; cursor: pointer; font-size: 0.9rem; color: var(--muted); padding: 4px; }
+.proj-fields { display: none; margin-top: 0.8rem; border-top: 1px solid #f0f0f0; padding-top: 0.8rem; }
+.proj-fields.open { display: block; }
+.del-btn { background: none; border: 1.5px solid #ef4444; color: #ef4444; padding: 5px 12px; border-radius: 6px; font-size: 0.72rem; font-family: var(--font-primary); font-weight: 900; cursor: pointer; margin-top: 0.5rem; }
+.del-btn:hover { background: #ef4444; color: white; }
+.add-proj-btn { width: 100%; padding: 11px; border: 2px dashed #d4d4d8; background: none; border-radius: 10px; font-size: 0.85rem; font-family: var(--font-primary); font-weight: 900; cursor: pointer; color: var(--muted); transition: 0.2s; }
+.add-proj-btn:hover { border-color: var(--text); color: var(--text); }
+.save-bar { position: sticky; bottom: 0; background: var(--text); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; border-radius: 12px; }
+.save-status { font-family: var(--font-primary); color: var(--accent); font-size: 0.78rem; font-weight: 900; }
+input[type="color"] { height: 36px; padding: 2px 4px; cursor: pointer; border-radius: 6px; }
+</style>
+
+<div id="portfolio-app">
+  <div id="admin-bar">
+    <span id="admin-bar-title">✦ Rithika Portfolio</span>
+    <div class="admin-btns">
+      <button class="admin-btn outline" onclick="downloadHTML()">↓ Download HTML</button>
+      <button class="admin-btn" id="toggle-btn" onclick="toggleEdit()">✎ Edit Portfolio</button>
+    </div>
+  </div>
+
+  <div id="portfolio-view"></div>
+
+  <div id="edit-panel" style="display:none">
+    <div class="edit-top">
+      <h2>Edit Your Portfolio</h2>
+      <button class="admin-btn" onclick="toggleEdit()">✓ Preview</button>
+    </div>
+    <div class="edit-section">
+      <div class="edit-sec-title">Basic Info</div>
+      <div class="edit-field"><label>Your Name</label><input type="text" id="edit-name" oninput="updateState('name',this.value)" /></div>
+      <div class="edit-field"><label>Tagline / Motto</label><textarea id="edit-motto" oninput="updateState('motto',this.value)"></textarea></div>
+    </div>
+    <div class="edit-section">
+      <div class="edit-sec-title">Projects — click any to expand</div>
+      <div id="projects-list"></div>
+      <button class="add-proj-btn" onclick="addProject()">+ Add New Project</button>
+    </div>
+    <div class="edit-section">
+      <div class="edit-sec-title">Contact</div>
+      <div class="edit-field"><label>Email Address</label><input type="email" id="edit-email" oninput="updateContact('email',this.value)" /></div>
+      <div class="edit-field"><label>LinkedIn URL</label><input type="url" id="edit-linkedin" oninput="updateContact('linkedin',this.value)" /></div>
+    </div>
+    <div class="save-bar">
+      <span class="save-status" id="save-status">All changes saved automatically</span>
+      <div style="display:flex;gap:8px;">
+        <button class="admin-btn outline" onclick="downloadHTML()">↓ Download HTML</button>
+        <button class="admin-btn" onclick="toggleEdit()">✓ Done — Preview</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+<script>
+const DEFAULT = {
+  name: "Rithika",
+  motto: "Most ideas are a great start—execution is what brings them to life. That's where I can help.",
+  projects: [
+    { id:1, name:"Pocketgluca", logo:"Pocket\nGluca", desc:"Glucose shots for type 1 diabetics.", bg:"#ef4444", color:"#ffffff", link:"https://pocketgluca.in/", label:"View Project" },
+    { id:2, name:"The Func Lab", logo:"Func Lab", desc:"Clean label plant & whey protein powders.", bg:"#18181b", color:"#bef264", link:"https://thefunclab.com/", label:"View Project" },
+    { id:3, name:"Caffeinated", logo:"Caffeinated", desc:"Hard boiled candy delivering coffee's caffeine.", bg:"#78350f", color:"#fef3c7", link:"https://www.caffeinated.co.in/", label:"View Project" },
+    { id:4, name:"BLNCD", logo:"BLNCD", desc:"Sparkling electrolyte beverage for athletes.", bg:"#3b82f6", color:"#ffffff", link:"", label:"Coming Soon" },
+    { id:5, name:"Swichh", logo:"Swichh", desc:"Prebiotic soda formulated for gut health.", bg:"#fbcfe8", color:"#be185d", link:"https://www.instagram.com/p/DW_lUbpAemX/", label:"View Project" },
+    { id:6, name:"Disstroy", logo:"Disstroy", desc:"Electrolyte beverage infused with coconut water.", bg:"#fef08a", color:"#1c1917", link:"https://www.instagram.com/disstroyofficial/", label:"View Project" },
+    { id:7, name:"Impact Water", logo:"Impact\nWater", desc:"Sustainable packaged drinking water.", bg:"#a5f3fc", color:"#083344", link:"https://www.impactwater.in/", label:"View Project" },
+    { id:8, name:"Papel", logo:"Papel", desc:"Alkaline water in sustainable packaging.", bg:"#bfdbfe", color:"#1e3a8a", link:"https://www.papelwater.in/", label:"View Project" },
+    { id:9, name:"Tori", logo:"Tori", desc:"ACV based functional sparkling water.", bg:"#fed7aa", color:"#9a3412", link:"https://tori.fit/", label:"View Project" },
+    { id:10, name:"Surati Coco", logo:"Surati\nCoco", desc:"Premium rich coconut milkshake.", bg:"#f5f5f4", color:"#44403c", link:"https://www.instagram.com/surati.coco/", label:"View Project" }
+  ],
+  contact: { email:"rithikashetty0601@gmail.com", linkedin:"https://www.linkedin.com/in/rithika-shetty/" }
+};
+
+let state = JSON.parse(JSON.stringify(DEFAULT));
+let editMode = false;
+
+async function loadState() {
+  try { const r=await window.storage.get('rithika-portfolio'); if(r&&r.value) state=JSON.parse(r.value); } catch(e) {}
+  renderPortfolio();
+}
+
+async function saveState() {
+  try {
+    await window.storage.set('rithika-portfolio', JSON.stringify(state));
+    const el=document.getElementById('save-status');
+    if(el){ el.textContent='✓ Saved!'; setTimeout(()=>{ el.textContent='All changes saved automatically'; },1800); }
+  } catch(e) {}
+}
+
+function updateState(k,v){ state[k]=v; saveState(); }
+function updateContact(k,v){ state.contact[k]=v; saveState(); }
+function updateProject(id,k,v){ const p=state.projects.find(x=>x.id===id); if(p){ p[k]=v; saveState(); } }
+function deleteProject(id){ state.projects=state.projects.filter(p=>p.id!==id); renderEditPanel(); saveState(); }
+function addProject(){ state.projects.push({id:Date.now(),name:"New Project",logo:"New\nProject",desc:"Short description.",bg:"#6366f1",color:"#ffffff",link:"",label:"View Project"}); renderEditPanel(); saveState(); }
+
+function renderPortfolio(){
+  const d=state;
+  const cards=d.projects.map(p=>`
+    <div class="p-card" data-tilt>
+      <div class="card-img" style="background:${p.bg}">
+        <div class="brand-logo" style="color:${p.color}">${p.logo.replace(/\n/g,'<br>')}</div>
+      </div>
+      <div class="card-name">${p.name}</div>
+      <p class="card-desc">${p.desc}</p>
+      ${p.link?`<a href="${p.link}" class="pf-btn" target="_blank">${p.label}</a>`:`<span class="pf-btn disabled">${p.label}</span>`}
+    </div>`).join('');
+
+  document.getElementById('portfolio-view').innerHTML=`
+    <div class="p-header">
+      <h1 class="sketch-title">Hi, I'm <span class="highlight">${d.name}</span></h1>
+      <p class="motto">${d.motto}</p>
+    </div>
+    <div class="p-grid-wrap"><div class="p-grid">${cards}</div></div>
+    <section class="cta-section">
+      <h2>If you're serious about building something, let's connect.</h2>
+      <div class="contact-links">
+        <a href="mailto:${d.contact.email}" class="contact-item">${d.contact.email}</a>
+        <a href="${d.contact.linkedin}" class="contact-item" target="_blank">LinkedIn</a>
+      </div>
+    </section>
+    <footer class="p-footer">&copy; 2026 ${d.name} | Innovation & Execution</footer>`;
+
+  setTimeout(()=>{
+    if(typeof gsap!=='undefined'){
+      gsap.from(".sketch-title",{opacity:0,y:30,duration:1,ease:"power3.out"});
+      gsap.from(".motto",{opacity:0,y:20,duration:1,delay:0.3,ease:"power3.out"});
+      gsap.utils.toArray(".p-card").forEach((c,i)=>gsap.from(c,{opacity:0,y:40,duration:0.6,delay:i*0.07,ease:"power2.out"}));
+    }
+    if(typeof VanillaTilt!=='undefined') VanillaTilt.init(document.querySelectorAll(".p-card"),{max:5,speed:400});
+  },100);
+}
+
+function renderEditPanel(){
+  document.getElementById('edit-name').value=state.name;
+  document.getElementById('edit-motto').value=state.motto;
+  document.getElementById('edit-email').value=state.contact.email;
+  document.getElementById('edit-linkedin').value=state.contact.linkedin;
+  document.getElementById('projects-list').innerHTML=state.projects.map(p=>`
+    <div class="proj-card">
+      <div class="proj-head" onclick="toggleProj(${p.id})">
+        <div style="display:flex;align-items:center;">
+          <div class="proj-dot" style="background:${p.bg}"></div>
+          <span class="proj-name-label">${p.name}</span>
+        </div>
+        <button class="proj-toggle" onclick="event.stopPropagation();toggleProj(${p.id})">▼</button>
+      </div>
+      <div id="pf-${p.id}" class="proj-fields">
+        <div class="fields-row">
+          <div class="edit-field"><label>Project Name</label><input type="text" value="${p.name}" oninput="updateProject(${p.id},'name',this.value);this.closest('.proj-card').querySelector('.proj-name-label').textContent=this.value" /></div>
+          <div class="edit-field"><label>Logo Text</label><textarea style="min-height:36px;resize:none;" oninput="updateProject(${p.id},'logo',this.value)">${p.logo}</textarea></div>
+        </div>
+        <div class="edit-field"><label>Description</label><input type="text" value="${p.desc}" oninput="updateProject(${p.id},'desc',this.value)" /></div>
+        <div class="fields-row">
+          <div class="edit-field"><label>Background Color</label><input type="color" value="${p.bg}" oninput="updateProject(${p.id},'bg',this.value);this.closest('.proj-card').querySelector('.proj-dot').style.background=this.value" /></div>
+          <div class="edit-field"><label>Text Color</label><input type="color" value="${p.color}" oninput="updateProject(${p.id},'color',this.value)" /></div>
+        </div>
+        <div class="fields-row">
+          <div class="edit-field"><label>Link URL</label><input type="url" value="${p.link}" placeholder="https://..." oninput="updateProject(${p.id},'link',this.value)" /></div>
+          <div class="edit-field"><label>Button Label</label><input type="text" value="${p.label}" oninput="updateProject(${p.id},'label',this.value)" /></div>
+        </div>
+        <button class="del-btn" onclick="deleteProject(${p.id})">✕ Remove Project</button>
+      </div>
+    </div>`).join('');
+}
+
+function toggleProj(id){ const el=document.getElementById('pf-'+id); if(el) el.classList.toggle('open'); }
+
+function toggleEdit(){
+  editMode=!editMode;
+  document.getElementById('portfolio-view').style.display=editMode?'none':'block';
+  document.getElementById('edit-panel').style.display=editMode?'block':'none';
+  document.getElementById('toggle-btn').textContent=editMode?'← Portfolio':'✎ Edit Portfolio';
+  if(editMode) renderEditPanel(); else renderPortfolio();
+}
+
+function downloadHTML(){
+  const d=state;
+  const cards=d.projects.map(p=>`
+            <div class="card" data-tilt>
+                <div class="card-img" style="background:${p.bg};"><div class="brand-logo" style="color:${p.color};">${p.logo.replace(/\n/g,'<br>')}</div></div>
+                <div class="card-body">
+                    <h3>${p.name}</h3>
+                    <p>${p.desc}</p>
+                    ${p.link?`<a href="${p.link}" class="btn" target="_blank">${p.label}</a>`:`<a href="#" class="btn" style="opacity:0.5;pointer-events:none;">${p.label}</a>`}
+                </div>
+            </div>`).join('\n');
+
+  const html=`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${d.name} | Innovation & Execution</title>
+    <!-- CoFo Sans: place your CoFo Sans font files in a /fonts folder and uncomment below -->
+    <!--
+    <style>
+        @font-face {
+            font-family: 'CoFo Sans';
+            src: url('fonts/CoFoSans-Regular.woff2') format('woff2');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'CoFo Sans';
+            src: url('fonts/CoFoSans-Bold.woff2') format('woff2');
+            font-weight: 700 900;
+        }
+    </style>
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"><\/script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"><\/script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"><\/script>
+    <style>
+        :root {
+            --bg: #f4f4f5;
+            --text: #18181b;
+            --accent: #bef264;
+            --font-primary: 'CoFo Sans', system-ui, sans-serif;
+            --font-secondary: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+        }
+        * { box-sizing: border-box; cursor: none; }
+        body { font-family: var(--font-secondary); background: var(--bg); color: var(--text); margin: 0; overflow-x: hidden; }
+        #cursor { width: 24px; height: 24px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; mix-blend-mode: difference; }
+        header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 2rem; }
+        .sketch-title { font-family: var(--font-primary); font-size: clamp(3.5rem, 8vw, 6rem); margin: 0; font-weight: 900; letter-spacing: -2px; line-height: 1.05; }
+        .sketch-title span { display: inline-block; position: relative; }
+        .sketch-title span::after { content: ""; position: absolute; bottom: 6px; left: 0; width: 100%; height: 12px; background: var(--accent); z-index: -1; transform: rotate(-1.5deg); }
+        .motto { font-family: var(--font-secondary); font-size: 1.4rem; max-width: 650px; margin-top: 1.5rem; font-weight: 400; line-height: 1.75; color: #52525b; }
+        .portfolio-container { padding: 5vw; }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem; }
+        .card { background: #fff; border-radius: 16px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: all 0.3s ease; border: 2px solid transparent; }
+        .card:hover { border-color: var(--text); transform: translateY(-10px); }
+        .card-img { width: 100%; height: 260px; border-radius: 12px; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; }
+        .brand-logo { font-family: var(--font-primary); font-weight: 900; font-size: 2.2rem; text-transform: uppercase; letter-spacing: -1px; text-align: center; line-height: 1.1; }
+        .card-body h3 { font-family: var(--font-primary); font-weight: 900; font-size: 1.5rem; margin: 0 0 0.5rem; letter-spacing: -0.5px; }
+        .card-body p { font-family: var(--font-secondary); font-size: 0.95rem; color: #52525b; margin-bottom: 1.5rem; min-height: 50px; line-height: 1.6; }
+        .btn { font-family: var(--font-primary); display: inline-block; padding: 12px 24px; background: var(--text); color: var(--accent); border-radius: 8px; font-weight: 900; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; text-decoration: none; transition: 0.3s; }
+        .btn:hover { background: var(--accent); color: var(--text); }
+        .cta-section { padding: 8rem 2rem; text-align: center; }
+        .cta-section h2 { font-family: var(--font-primary); font-size: 2.5rem; font-weight: 900; margin-bottom: 2rem; letter-spacing: -1px; line-height: 1.15; }
+        .contact-links { display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        .contact-item { font-family: var(--font-primary); font-size: 1.2rem; font-weight: 900; color: var(--text); text-decoration: none; border-bottom: 4px solid var(--accent); transition: 0.3s; }
+        .contact-item:hover { background: var(--accent); }
+        footer { font-family: var(--font-secondary); padding: 3rem; text-align: center; font-size: 0.8rem; color: #52525b; }
+    </style>
+</head>
+<body>
+    <div id="cursor"></div>
+    <header>
+        <h1 class="sketch-title">Hi, I'm <span>${d.name}</span></h1>
+        <p class="motto">${d.motto}</p>
+    </header>
+    <div class="portfolio-container">
+        <div class="portfolio-grid">
+${cards}
+        </div>
+    </div>
+    <section class="cta-section">
+        <h2>If you're serious about building something, let's connect.</h2>
+        <div class="contact-links">
+            <a href="mailto:${d.contact.email}" class="contact-item">${d.contact.email}</a>
+            <a href="${d.contact.linkedin}" class="contact-item" target="_blank">LinkedIn</a>
+        </div>
+    </section>
+    <footer>&copy; 2026 ${d.name} | Innovation & Execution</footer>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        const cursor = document.querySelector('#cursor');
+        document.addEventListener('mousemove', e => { gsap.to(cursor, { x: e.clientX-12, y: e.clientY-12, duration: 0.1 }); });
+        gsap.from(".sketch-title", { opacity: 0, y: 30, duration: 1, ease: "power3.out" });
+        gsap.from(".motto", { opacity: 0, y: 20, duration: 1, delay: 0.3, ease: "power3.out" });
+        gsap.utils.toArray(".card").forEach((c,i) => gsap.from(c, { scrollTrigger: { trigger: c, start: "top 90%" }, opacity: 0, y: 50, duration: 0.6, delay: (i%3)*0.15 }));
+        VanillaTilt.init(document.querySelectorAll(".card"), { max: 5, speed: 400 });
+    <\/script>
+</body>
+</html>`;
+
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=`${state.name.toLowerCase()}-portfolio.html`; a.click();
+  URL.revokeObjectURL(url);
+}
+
+loadState();
+</script>
